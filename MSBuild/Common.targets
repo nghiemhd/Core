@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <!-- This is the first PropertyGroup in your project. -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <!-- ...and all the other stuff, then before the group end: -->
+    <CodeAnalysisAdditionalOptions>/assemblycomparemode:StrongNameIgnoringVersion</CodeAnalysisAdditionalOptions>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(MSBuildToolsDir)' == ''">
+    <MSBuildToolsDir>$(SolutionDir)\MSBuild\</MSBuildToolsDir>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <StyleCopAnalysisTarget Condition=" '$(StyleCopAnalysisTarget)' == '' ">$(MSBuildToolsDir)StyleCop\StyleCop.Targets</StyleCopAnalysisTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>$(SolutionDir)\Code Analysis (Basic).ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisAdditionalOptions>/assemblyCompareMode:StrongNameIgnoringVersion</CodeAnalysisAdditionalOptions>
+    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+  </PropertyGroup>
+
+  <Import Project="$(StyleCopAnalysisTarget)" />
+</Project>

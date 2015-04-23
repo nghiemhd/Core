@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Common
+namespace Core.Common.Contracts
 {
-    public class Class1
+    public class IDirtyCapable
     {
     }
 }

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Core.Common.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +30,20 @@ namespace Core.Common.Core
                 propertyChangedEvent -= value;
                 propertyChangedSubcribers.Remove(value);
             }
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            if (propertyChangedEvent != null)
+            {
+                propertyChangedEvent(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        protected virtual void OnPropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        {
+            string propertyName = PropertySupport.ExtractPropertyName(propertyExpression);
+            OnPropertyChanged(propertyName);
         }
     }
 }

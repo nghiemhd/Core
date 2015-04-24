@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,10 +14,28 @@ namespace Core.Common.Utils
         {
             if (propertyExpression == null)
             {
-                var i = 0;
+                throw new ArgumentNullException("propertyExpression");
             }
 
-            return "";
+            var memberExpression = propertyExpression.Body as MemberExpression;
+            if (memberExpression == null)
+            {
+                throw new ArgumentException("memberExpression");
+            }
+
+            var property = memberExpression.Member as PropertyInfo;
+            if (property == null)
+            {
+                throw new ArgumentException("property");
+            }
+
+            var getMethod = property.GetGetMethod(true);
+            if (getMethod.IsStatic)
+            {
+                throw new ArgumentException("static method");
+            }
+
+            return memberExpression.Member.Name;
         }
     }
 }
